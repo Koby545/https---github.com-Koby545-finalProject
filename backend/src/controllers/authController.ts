@@ -5,6 +5,7 @@ import User, { IUser } from '../models/User';
 
 export const registerUser = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
+  const profilePhoto = req.file ? req.file.filename : '';
 
   try {
     const userExists = await User.findOne({ email });
@@ -18,6 +19,7 @@ export const registerUser = async (req: Request, res: Response) => {
       username,
       email,
       password: hashedPassword,
+      profilePhoto
     });
 
     await user.save();
